@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: ai-code-reviewer
+
+  datasource:
+    url: jdbc:h2:file:./data/ai_code_reviewer
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+            scope:
+              - read:user
+              - repo
+
+  ai:
+    openai:
+      api-key: ${GEMINI_API_KEY}
+      base-url: https://generativelanguage.googleapis.com/v1beta/openai/
+      chat:
+        options:
+          model: gemini-2.5-flash
+
+# Add your GitHub Personal Access Token (PAT) below 
+# It requires 'repo' permissions so the AI can physically post its review comments back onto your PRs
+github-token: ${GITHUB_TOKEN}
